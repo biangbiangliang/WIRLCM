@@ -1,19 +1,11 @@
 function [lambda_1, lambda_2] = structure_tensor_lambda(img, sz)
-
-% G = fspecial('gaussian', [sz sz], 2); % Gaussian kernel
-% u = imfilter(img, G, 'symmetric');
 [Gx1, Gy1] = gradient(img);
 Gx2 = imfilter(img, [1, 0, -1], "symmetric");
 Gy2 = imfilter(img, [1; 0; -1], "symmetric");
 Gx = 0.5*(Gx1 + Gx2);
 Gy = 0.5*(Gy1 + Gy2);
 
-K = fspecial('gaussian', [sz sz], 7); % Gaussian kernel
-% J_11 = Gx.^2;
-% J_12 = Gx.*Gy;
-% J_21 = J_12;
-% J_22 = Gy.^2;
-
+K = fspecial('gaussian', [sz sz], 5); % Gaussian kernel
 J_11 = imfilter(Gx.^2, K, 'symmetric'); 
 J_12 = imfilter(Gx.*Gy, K, 'symmetric');
 J_21 = J_12;
